@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <title>प्रिंट पोर्टल - SUBHASH ONLINE SEWA</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+    }
+    .sidebar {
+      width: 250px;
+      background-color: #f0f0f0;
+      padding-top: 20px;
+      height: 100vh;
+    }
+    .sidebar button {
+      display: block;
+      width: 90%;
+      margin: 10px auto;
+      padding: 12px;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .content {
+      flex: 1;
+      padding: 20px;
+      background-color: #fff;
+    }
+    .form-section {
+      display: none;
+    }
+    .form-section.active {
+      display: block;
+    }
+    .btn-aadhaar { background-color: #007bff; }
+    .btn-pan { background-color: #28a745; }
+    .btn-voter { background-color: #ffc107; color: black; }
+    .btn-death { background-color: #dc3545; }
+    .btn-birth { background-color: #6f42c1; }
+    .btn-aadhaar-manual { background-color: #17a2b8; }
+
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    .qr-section {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .qr-section img {
+      width: 250px;
+      height: auto;
+      border: 2px solid #666;
+      border-radius: 10px;
+    }
+
+    .submit-btn {
+      background-color: #28a745;
+      color: white;
+      padding: 12px;
+      border: none;
+      margin-top: 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <button class="btn-aadhaar" onclick="showForm('aadhaar')">आधार कार्ड</button>
+    <button class="btn-pan" onclick="showForm('pan')">पैन कार्ड</button>
+    <button class="btn-voter" onclick="showForm('voter')">वोटर आईडी</button>
+    <button class="btn-death" onclick="showForm('death')">मृत्यु प्रमाण पत्र</button>
+    <button class="btn-birth" onclick="showForm('birth')">जन्म प्रमाण पत्र</button>
+    <button class="btn-aadhaar-manual" onclick="showForm('aadhaar_manual')">आधार मैन्युअल</button>
+  </div>
+
+  <div class="content">
+
+    <!-- आधार कार्ड फॉर्म -->
+    <div id="aadhaar" class="form-section">
+      <h2>आधार कार्ड फॉर्म</h2>
+      <form onsubmit="submitForm(event)">
+        <label>पूरा नाम:</label>
+        <input type="text" required placeholder="अपना नाम दर्ज करें">
+
+        <label>मोबाइल नंबर:</label>
+        <input type="text" required placeholder="मोबाइल नंबर दर्ज करें">
+
+        <label>आधार नंबर:</label>
+        <input type="text" required placeholder="आधार नंबर दर्ज करें">
+
+        <div class="qr-section">
+          <h3>QR कोड स्कैन करके पेमेंट करें:</h3>
+          <img src="WhatsApp Image 2025-05-24 at 6.00.15 PM.jpeg" alt="PhonePe QR Code">
+          <p><strong>Subhash Gupta</strong></p>
+        </div>
+
+        <button type="submit" class="submit-btn">फॉर्म सबमिट करें</button>
+      </form>
+    </div>
+
+    <!-- बाकी फॉर्म्स इसी तरह बना सकते हैं -->
+
+  </div>
+
+  <script>
+    function showForm(formId) {
+      const sections = document.querySelectorAll('.form-section');
+      sections.forEach(section => section.classList.remove('active'));
+      document.getElementById(formId).classList.add('active');
+    }
+
+    function submitForm(event) {
+      event.preventDefault();
+      alert("आपका फॉर्म सफलतापूर्वक जमा हो गया है। धन्यवाद!");
+    }
+  </script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <title>आधार डाउनलोड + वॉलेट</title>
+  <style>
+    body {
+      font-family: Arial;
+      padding: 20px;
+    }
+    .wallet-box {
+      background-color: #f4f4f4;
+      padding: 20px;
+      width: 300px;
+      border-radius: 8px;
+    }
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    .green { background-color: #28a745; color: white; border: none; }
+    .blue { background-color: #007bff; color: white; border: none; }
+  </style>
+</head>
+<body>
+
+  <h2>🔐 ग्राहक वॉलेट</h2>
+  <div class="wallet-box">
+    <p><strong>वॉलेट बैलेंस:</strong> ₹<span id="balance">0</span></p>
+
+    <label>राशि जोड़ें (₹):</label><br>
+    <input type="number" id="addAmount" value="30"><br>
+    <button class="blue" onclick="addMoney()">Add Money</button><br><br>
+
+    <button class="green" onclick="downloadAadhaar()">आधार डाउनलोड (₹30)</button>
+  </div>
+
+  <script>
+    // LocalStorage से बैलेंस लाओ
+    let balance = parseInt(localStorage.getItem("walletBalance")) || 0;
+    document.getElementById("balance").innerText = balance;
+
+    function addMoney() {
+      let amount = parseInt(document.getElementById("addAmount").value);
+      if (amount > 0) {
+        balance += amount;
+        localStorage.setItem("walletBalance", balance);
+        document.getElementById("balance").innerText = balance;
+        alert("₹" + amount + " जोड़े गए!");
+      } else {
+        alert("कृपया सही राशि दर्ज करें");
+      }
+    }
+
+    function downloadAadhaar() {
+      if (balance >= 30) {
+        balance -= 30;
+        localStorage.setItem("walletBalance", balance);
+        document.getElementById("balance").innerText = balance;
+        alert("₹30 काटे गए। आपका आधार डाउनलोड हो रहा है...");
+        // यहां आधार डाउनलोड लिंक दें
+        window.open("https://example.com/aadhaar.pdf", "_blank");
+      } else {
+        alert("आपके वॉलेट में ₹30 नहीं हैं, पहले Add Money करें");
+      }
+    }
+  </script>
+
+</body>
+</html>
